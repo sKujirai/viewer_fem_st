@@ -9,13 +9,19 @@ def page_linechart():
     # Load DataFrame
     df = None
 
-    file_buffer = st.file_uploader("Choose a CSV file...", type='csv', encoding=None)
+    file_buffer = st.file_uploader("Choose a CSV file", type='csv', encoding=None)
+
+    csv_path = st.text_input('or input CSV file path', '')
+
     if file_buffer:
         uploaded_file = io.TextIOWrapper(file_buffer)
         if uploaded_file is not None:
             data_load_state = st.text('Loading data...')
             df = pd.read_csv(uploaded_file)
             data_load_state.text('Loading data...done')
+    else:
+        if os.path.isfile(csv_path):
+            df = pd.read_csv(csv_path, encoding='utf-8')
 
     if df is not None:
 
