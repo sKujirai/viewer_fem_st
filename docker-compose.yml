@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  st_viewer:
+    build:
+      context: .
+      args:
+        - WORK_DIR=${WORK_DIR_CONTAINER}
+        - DATA_DIR=${DATA_DIR_CONTAINER}
+    volumes:
+      - ".:${WORK_DIR_CONTAINER}"
+      - "${DATA_DIR_HOST}:${DATA_DIR_CONTAINER}"
+    ports:
+      - "${HTTP_PORT}:8501"
+    command: "streamlit run app.py"
